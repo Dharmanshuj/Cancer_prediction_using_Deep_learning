@@ -3,12 +3,19 @@ from tensorflow.keras.models import load_model
 from keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 import os
+import gdown
+
 
 # Initialize Flask app
 app = Flask(__name__)
 
-# Load the trained model
-model = load_model('./model.h5')
+model_path = './model.h5'
+if not os.path.exists(model_path):
+    file_id = '13FplfQVMzmdUl4JypPMzCwZRnuD5a6eG'
+    gdown.download(f'https://drive.google.com/uc?id={file_id}', model_path, quiet=False)
+
+# Load the model
+model = load_model(model_path)
 
 # Class labels
 class_labels = ['pituitary', 'glioma', 'notumor', 'meningioma']
